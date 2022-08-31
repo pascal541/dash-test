@@ -2,24 +2,33 @@ import {Dash} from 'dash-compiler'
 import {isMatch} from 'bridge-common-utils'
 import {NodeFileSystem} from './Dash/FileSystem'
 import {FileTypeImpl, PackTypeImpl} from './Dash/Definitions'
+import axios from 'axios'
+import path from 'path'
 
-compile().then()
+build().then()
 
-async function compile() {
-    const input = new NodeFileSystem('')
-    const output = new NodeFileSystem('')
-    let compiler = new Dash(input, output,
+async function createDashService() {
+    const input = new NodeFileSystem(path.join(__dirname, '..', 'test_project'))
+    const output = new NodeFileSystem(path.join(__dirname, '..', 'test_project'))
+    const dash = new Dash(input, output,
         {
-            config: '',
+            config: path.join(__dirname, '..', 'test_project', 'config.json'),
+            mode: 'production',
             packType: <any>new PackTypeImpl(undefined),
             fileType: <any>new FileTypeImpl(undefined, isMatch),
             requestJsonData: (dataPath: string) =>
-                fetch(
+                axios.get(
                     dataPath.replace(
                         'data/',
                         'https://raw.githubusercontent.com/bridge-core/editor-packages/main/'
                     )
-                ).then((resp) => resp.json())
+                ).then(resp => resp.data)
         })
-    //await compiler.build()
+    await dash.setup()
+    return dash
+}
+
+async function build() {
+    const dash = await createDashService()
+    await dash.build()
 }
