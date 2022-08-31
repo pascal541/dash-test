@@ -1,5 +1,6 @@
 .idea
 dist
+test_project
 node_modules/*
 !node_modules/@swc
 node_modules/@swc/*
