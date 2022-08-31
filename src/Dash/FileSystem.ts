@@ -1,6 +1,7 @@
 import {FileSystem} from 'dash-compiler'
 import fs from 'fs'
 import path from 'path'
+import {File} from '@web-std/file'
 
 export class NodeFileSystem extends FileSystem {
     constructor(protected baseDirectory: string = '') {
@@ -33,13 +34,15 @@ export class NodeFileSystem extends FileSystem {
         fs.rmSync(this.resolvePath(path), {recursive: true})
     }
 
-    async readdir(path: string) {
+    async readdir(filePath: string) {
         const entries = []
 
-        for await (const entry of fs.readdirSync(this.resolvePath(path))) {
+        for await (const entry of fs.readdirSync(this.resolvePath(filePath))) {
+            let entryPath = path.join(this.resolvePath(filePath), entry)
+
             entries.push(<const>{
                 name: entry,
-                kind: fs.lstatSync(entry).isDirectory() ? 'directory' : 'file',
+                kind: fs.lstatSync(entryPath).isDirectory() ? 'directory' : 'file',
             })
         }
 

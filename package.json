@@ -12,11 +12,13 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@web-std/file": "^3.0.2",
+		"axios": "^0.27.2",
 		"dash-compiler": "^0.9.28"
 	},
 	"devDependencies": {
-		"@types/node": "^18.7.13",
 		"@swc/wasm": "^1.2.245",
+		"@types/node": "^18.7.14",
 		"ts-node": "^10.9.1",
 		"typescript": "^4.8.2"
 	}
