@@ -1,4 +1,4 @@
-import {Dash} from 'dash-compiler'
+import {Dash, initRuntimes} from 'dash-compiler'
 import {isMatch} from 'bridge-common-utils'
 import {NodeFileSystem} from './Dash/FileSystem'
 import {FileTypeImpl, PackTypeImpl} from './Dash/Definitions'
@@ -29,6 +29,7 @@ async function createDashService() {
 }
 
 async function build() {
+    initRuntimes()
     const dash = await createDashService()
     await dash.build()
 }
