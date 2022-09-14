@@ -10,7 +10,7 @@
 	"dependencies": {
 		"@web-std/file": "^3.0.2",
 		"axios": "^0.27.2",
-		"dash-compiler": "^0.9.29"
+		"dash-compiler": "^0.9.30"
 	},
 	"devDependencies": {
 		"@swc/wasm": "^1.3.0",
